@@ -1,24 +1,4 @@
-// the grid
-
-const canvas = document.getElementById('canvas');
-
-function makeGrid(dimension) {
-    for (let i = 0; i < dimension; i++) {
-        for (let l = 0; l < dimension; l++) {
-            const pixel = document.createElement('div');
-            canvas.appendChild(pixel);
-            pixel.classList.add('pixel');
-        }
-    }
-    canvas.style.gridTemplateRows = `repeat(${dimension}, 1fr)`;
-    canvas.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
-}
-
-makeGrid(12);
-
-// the drawing functionality
-
-const allPixels = document.querySelectorAll(".pixel");
+// flag for mousedown
 
 let mouseDown = false;
 document.body.onmousedown = function() {
@@ -27,14 +7,40 @@ document.body.onmousedown = function() {
     mouseDown = false;
 };
 
-for (let i = 0; i < allPixels.length; i++) {
-    allPixels[i].addEventListener('mouseover', function() {
-        if (mouseDown > 0) {
-            this.style.backgroundColor = "black";
+// the canvas
+
+const canvas = document.getElementById('canvas');
+
+function makeCanvas(dimension) {
+    for (let i = 0; i < dimension; i++) {
+        for (let l = 0; l < dimension; l++) {
+            const pixel = document.createElement('div');
+            canvas.appendChild(pixel);
+            pixel.classList.add('pixel');
+            pixel.addEventListener('mouseover', function() {
+                if (mouseDown > 0) {
+                    this.style.backgroundColor = "black";
+                }
+            })
         }
-    })
+    }
+    canvas.style.gridTemplateRows = `repeat(${dimension}, 1fr)`;
+    canvas.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
 }
 
+function clearCanvas() {
+    let pixel = canvas.firstElementChild;
+    while (pixel) {
+        canvas.removeChild(pixel);
+        pixel = canvas.firstElementChild;
+    }
+}
 
+// the slider
 
+document.getElementById('dimensions').oninput = function() {
+    clearCanvas();
+    makeCanvas(this.value)
+}
 
+makeCanvas(10);
