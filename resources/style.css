@@ -5,8 +5,7 @@
   display: grid;
 }
 
-div {
-  border: 1px solid black;
+.pixel {
   width: 100%;
   height: 100%;
 }/*# sourceMappingURL=style.css.map */

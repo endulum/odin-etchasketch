@@ -2,9 +2,11 @@ const canvas = document.getElementById('canvas');
 
 function makeGrid(dimension) {
     // makes cells
-    for (let i = 1; i <= dimension; i++) {
-        for (let l = 1; l <= dimension; l++) {
-            canvas.appendChild(document.createElement('div'));
+    for (let i = 0; i < dimension; i++) {
+        for (let l = 0; l < dimension; l++) {
+            const pixel = document.createElement('div');
+            canvas.appendChild(pixel);
+            pixel.classList.add('pixel');
         }
     }
     // adjusts cells into grid layout
@@ -12,6 +14,12 @@ function makeGrid(dimension) {
     canvas.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
 }
 
-makeGrid(7);
+makeGrid(10);
 
+let allPixels = document.querySelectorAll(".pixel");
 
+for (let i = 0; i < allPixels.length; i++) {
+    allPixels[i].addEventListener('mouseover', function(e) {
+        this.style.backgroundColor = "red";
+    })
+}
