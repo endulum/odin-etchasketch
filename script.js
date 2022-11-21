@@ -1,3 +1,5 @@
+let drawMode = "black";
+
 // flag for mousedown
 
 let mouseDown = false;
@@ -17,10 +19,15 @@ function makeCanvas(dimension) {
             const pixel = document.createElement('div');
             canvas.appendChild(pixel);
             pixel.classList.add('pixel');
+            // enable drawing with dragging
             pixel.addEventListener('mouseover', function() {
                 if (mouseDown > 0) {
-                    this.style.backgroundColor = "black";
+                    this.style.backgroundColor = drawMode;
                 }
+            }); 
+            // enable single pixel clicking
+            pixel.addEventListener('click', function() {
+                this.style.backgroundColor = drawMode;
             })
         }
     }
@@ -36,11 +43,19 @@ function clearCanvas() {
     }
 }
 
-// the slider
+// resize slider
 
 document.getElementById('dimensions').oninput = function() {
     clearCanvas();
     makeCanvas(this.value)
 }
+
+// drawmode toggle
+
+document.getElementById("drawMode").addEventListener('click', function() {
+    if (drawMode === "black") {drawMode = "transparent"}
+    else if (drawMode === "transparent") {drawMode = "black"}
+})
+
 
 makeCanvas(10);
