@@ -1,4 +1,7 @@
 let drawMode = "black";
+let canvasDimensions = 10;
+
+let gridLines = "on"; // flag for gridlines
 
 // flag for mousedown
 
@@ -47,7 +50,28 @@ function clearCanvas() {
 
 document.getElementById('dimensions').oninput = function() {
     clearCanvas();
-    makeCanvas(this.value)
+    makeCanvas(this.value);
+    canvasDimensions = this.value;
+}
+
+// reset button
+
+document.getElementById('reset').onclick = function() {
+    clearCanvas();
+    makeCanvas(canvasDimensions);
+    if (gridLines == "off") {
+        const pixels = document.querySelectorAll('.pixel');
+        for (let i = 0; i < pixels.length; i++) {
+            pixels[i].style.borderTop = "none";
+            pixels[i].style.borderRight = "none";
+        };
+    } else if (gridLines = "on") {
+        const pixels = document.querySelectorAll('.pixel');
+        for (let i = 0; i < pixels.length; i++) {
+            pixels[i].style.borderTop = "1px solid gray";
+            pixels[i].style.borderRight = "1px solid gray";
+        };
+    }
 }
 
 // drawmode toggle
@@ -55,6 +79,29 @@ document.getElementById('dimensions').oninput = function() {
 document.getElementById("drawMode").addEventListener('click', function() {
     if (drawMode === "black") {drawMode = "transparent"}
     else if (drawMode === "transparent") {drawMode = "black"}
+})
+
+// gridlines toggle
+
+
+document.getElementById("gridLines").addEventListener('click', function() {
+    if (gridLines == "on") {
+        canvas.style.borderBottom = "none";
+        canvas.style.borderLeft = "none";
+        const pixels = document.querySelectorAll('.pixel');
+        for (let i = 0; i < pixels.length; i++) {
+            pixels[i].style.borderTop = "none";
+            pixels[i].style.borderRight = "none";
+        }; gridLines = "off";
+    } else if (gridLines = "off") {
+        canvas.style.borderBottom = "1px solid gray";
+        canvas.style.borderLeft = "1px solid gray";
+        const pixels = document.querySelectorAll('.pixel');
+        for (let i = 0; i < pixels.length; i++) {
+            pixels[i].style.borderTop = "1px solid gray";
+            pixels[i].style.borderRight = "1px solid gray";
+        }; gridLines = "on";
+    }
 })
 
 
