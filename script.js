@@ -1,41 +1,28 @@
-let drawMode = "black";
-let canvasDimensions = 10;
-
-let gridLines = "on"; // flag for gridlines
-
-// flag for mousedown
-
-let mouseDown = false;
-document.body.onmousedown = function() {
-    mouseDown = true;
-}; document.body.onmouseup = function() {
-    mouseDown = false;
-};
-
-// the canvas
-
 const canvas = document.getElementById('canvas');
+let canvasDimensions = 5;
+let drawMode = "black";
+let allPixels;
 
-function makeCanvas(dimension) {
-    for (let i = 0; i < dimension; i++) {
-        for (let l = 0; l < dimension; l++) {
-            const pixel = document.createElement('div');
+let isDrawing = false;
+canvas.onmousedown = function() {isDrawing = true;};
+canvas.onmouseup = function() {isDrawing = false;};
+
+function makeCanvas(canvasDimensions) {
+    for (let i = 0; i < canvasDimensions; i++) {
+        for (let j = 0; j < canvasDimensions; j++) {
+            let pixel = document.createElement('div');
             canvas.appendChild(pixel);
-            pixel.classList.add('pixel');
-            // enable drawing with dragging
             pixel.addEventListener('mouseover', function() {
-                if (mouseDown > 0) {
+                if (isDrawing == true) {
                     this.style.backgroundColor = drawMode;
                 }
-            }); 
-            // enable single pixel clicking
-            pixel.addEventListener('click', function() {
+            }); pixel.addEventListener('click', function() {
                 this.style.backgroundColor = drawMode;
-            })
+            }); pixel.classList.add('pixel');
         }
-    }
-    canvas.style.gridTemplateRows = `repeat(${dimension}, 1fr)`;
-    canvas.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
+    } canvas.style.gridTemplateRows = `repeat(${canvasDimensions}, 1fr)`;
+    canvas.style.gridTemplateColumns = `repeat(${canvasDimensions}, 1fr)`;
+    allPixels = document.querySelectorAll('.pixel');
 }
 
 function clearCanvas() {
@@ -46,63 +33,32 @@ function clearCanvas() {
     }
 }
 
-// resize slider
-
-document.getElementById('dimensions').oninput = function() {
-    clearCanvas();
-    makeCanvas(this.value);
-    canvasDimensions = this.value;
-}
-
-// reset button
-
-document.getElementById('reset').onclick = function() {
+function resetCanvas() {
     clearCanvas();
     makeCanvas(canvasDimensions);
-    if (gridLines == "off") {
-        const pixels = document.querySelectorAll('.pixel');
-        for (let i = 0; i < pixels.length; i++) {
-            pixels[i].style.borderTop = "none";
-            pixels[i].style.borderRight = "none";
-        };
-    } else if (gridLines = "on") {
-        const pixels = document.querySelectorAll('.pixel');
-        for (let i = 0; i < pixels.length; i++) {
-            pixels[i].style.borderTop = "1px solid gray";
-            pixels[i].style.borderRight = "1px solid gray";
-        };
-    }
 }
 
-// drawmode toggle
+function remakeCanvas(x) {
+    canvasDimensions = x;
+    resetCanvas();
+}
 
-document.getElementById("drawMode").addEventListener('click', function() {
-    if (drawMode === "black") {drawMode = "transparent"}
-    else if (drawMode === "transparent") {drawMode = "black"}
-})
+function toggleDrawMode() {
+    drawMode = (drawMode == "black"? "transparent" : "black");
+}
 
-// gridlines toggle
+let gridLines = "1px solid rgba(0,0,0,0.5)";
+function makeGridLines() {
+    canvas.style.borderBottom = gridLines;
+    canvas.style.borderLeft = gridLines;
+    for (let i = 0; i < allPixels.length; i++) {
+        allPixels[i].style.borderTop = gridLines;
+        allPixels[i].style.borderRight = gridLines;
+    };
+} function toggleGridLines() {
+    gridLines = (gridLines == "1px solid rgba(0,0,0,0.5)"? "none" : "1px solid rgba(0,0,0,0.5)");
+    makeGridLines();
+}
 
-
-document.getElementById("gridLines").addEventListener('click', function() {
-    if (gridLines == "on") {
-        canvas.style.borderBottom = "none";
-        canvas.style.borderLeft = "none";
-        const pixels = document.querySelectorAll('.pixel');
-        for (let i = 0; i < pixels.length; i++) {
-            pixels[i].style.borderTop = "none";
-            pixels[i].style.borderRight = "none";
-        }; gridLines = "off";
-    } else if (gridLines = "off") {
-        canvas.style.borderBottom = "1px solid gray";
-        canvas.style.borderLeft = "1px solid gray";
-        const pixels = document.querySelectorAll('.pixel');
-        for (let i = 0; i < pixels.length; i++) {
-            pixels[i].style.borderTop = "1px solid gray";
-            pixels[i].style.borderRight = "1px solid gray";
-        }; gridLines = "on";
-    }
-})
-
-
-makeCanvas(10);
+makeCanvas(canvasDimensions);
+makeGridLines();

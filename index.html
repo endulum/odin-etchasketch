@@ -9,16 +9,16 @@
 </head>
 <body>
     <section id="canvas"></section>
-    <input type="range" id="dimensions" min="2" max="50" value="10">
+    <input type="range" id="dimensions" min="2" max="50" value="10" onclick="remakeCanvas(this.value)">
     
     <label class="switch">
-        <input type="checkbox" id="drawMode">
+        <input type="checkbox" onclick="toggleDrawMode()">
         <span class="slider"></span>
     </label>
 
-    <input type="checkbox" id="gridLines"> Hide Grid Lines
+    <input type="checkbox" onclick="toggleGridLines()"> Hide Grid Lines
 
-    <button id="reset">RESET</button>
+    <button onclick="resetCanvas()">RESET</button>
 
     <script src="script.js"></script>
 </body>
