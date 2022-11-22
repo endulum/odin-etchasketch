@@ -23,6 +23,7 @@ function makeCanvas(canvasDimensions) {
     } canvas.style.gridTemplateRows = `repeat(${canvasDimensions}, 1fr)`;
     canvas.style.gridTemplateColumns = `repeat(${canvasDimensions}, 1fr)`;
     allPixels = document.querySelectorAll('.pixel');
+    makeGridLines();
 }
 
 function clearCanvas() {
@@ -60,5 +61,9 @@ function makeGridLines() {
     makeGridLines();
 }
 
+document.getElementById('dimensionsSelect').addEventListener('click', function() {remakeCanvas(this.value);});
+document.getElementById('toggleDrawMode').addEventListener('click', () => toggleDrawMode());
+document.getElementById('toggleGridLines').addEventListener('click', () => toggleGridLines());
+document.getElementById('resetCanvas').addEventListener('click', () => resetCanvas());
+
 makeCanvas(canvasDimensions);
-makeGridLines();
