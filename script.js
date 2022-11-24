@@ -1,5 +1,5 @@
 const canvas = document.getElementById('canvas');
-let canvasDimensions = 5;
+let canvasDimensions = 15;
 let drawMode = "black";
 let allPixels;
 

@@ -13,15 +13,33 @@
             <div id="canvas"></div>
         </section>
         <section class="settings">
-            <input type="range" id="dimensionsSelect" min="2" max="50" value="10">
+
+            <label class="rangeLabel">
+                <input type="range" id="dimensionsSelect" min="2" max="50" value="10">
+            </label>
+
+            <button class="reset" id="resetCanvas">
+                RESET
+            </button>
+
+            <label class="drawmodeLabel">
+                <input type="checkbox" id="toggleDrawMode">
+                <span class="slider"></span>
+            </label>
+
+            <label class="gridtoggleLabel">
+                <input type="checkbox" id="toggleGridLines">
+                <span class="slider"></span>
+            </label>
+
         </section>
     </main>
 
-    <!-- TODO:
-        id="toggleDrawMode"
-        id="toggleGridLines"
-        id="resetCanvas"
-     -->
-     <script src="script.js"></script>
+    <div class="cred">
+        <p>"Handheld" Etch-A-Sketch</p>
+        <small>Asset sources - <a href="https://www.toptal.com/designers/subtlepatterns/black-linen-2/">Background</a></small>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
